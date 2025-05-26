@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Бурение скважин в СПБ и Лен. области </title>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+<header>
+  <div class="navbar">
+    <div class="logo">
+      <img src="img/logo.PNG" alt="Логотип">
+      <div class="logo-text">
+        <div class="logo-name">БУРЭКСПЕРТ</div>
+        <div class="logo-region">СПБ и Лен.область</div>
+      </div>
+    </div>
+
+    <nav class="nav-links">
+      <a href="#prices">Цены</a>
+      <a href="#portfolio">Наши работы</a>
+      <a href="#services">Услуги</a>
+      <a href="#advantages">О компании</a>
+      <a href="#contacts">Контакты</a>
+    </nav>
+
+    <div class="burger" onclick="toggleMenu(this)">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+
+  <div class="side-menu" id="sideMenu">
+    <a href="#prices" onclick="closeMenu()">Цены</a>
+    <a href="#portfolio" onclick="closeMenu()">Наши работы</a>
+    <a href="#services" onclick="closeMenu()">Услуги</a>
+    <a href="#advantages" onclick="closeMenu()">О компании</a>
+    <a href="#contacts" onclick="closeMenu()">Контакты</a>
+  </div>
+
+  <div class="overlay" id="overlay" onclick="closeMenu()"></div>
+</header>
+
+<section class="hero">
+  <div class="hero-text">
+    <h1>Бурение скважин<br><span>БУРЭКСПЕРТ</span></h1>
+    <p>
+      Устали от отсутствия воды в доме? Хотите надёжный источник водоснабжения на своём участке, по цене даже дешевле колодца? Наша компания предлагает профессиональное бурение абиссинских скважин с полным комплексом услуг по водоподведению в дом.
+    </p>
+    <a href="#form" class="btn">Заказать услугу</a>
+  </div>
+  <div class="hero-image">
+    <img src="img/house-section.PNG" alt="Схема дома со скважиной">
+  </div>
+</section>
+
+<section id="services" class="services">
+    <h2>Услуги</h2>
+    <div class="service-cards">
+        <div class="service-card">
+            <img src="img/usluga1.PNG" alt="Пробное бурение">
+            <h3>Пробное бурение</h3>
+            <p>Выполним тестовое бурение для оценки качества и количества подземных вод.</p>
+            <div class="price">10 000₽</div>
+        </div>
+        <div class="service-card">
+            <img src="img/usluga2.PNG" alt="Бурение скважины">
+            <h3>Бурение скважины</h3>
+            <p>Пробурим скважину на песок, обеспечим стабильный источник воды.</p>
+            <div class="price">30 000₽</div>
+        </div>
+        <div class="service-card">
+            <img src="img/usluga3.PNG" alt="Заведение воды в дом">
+            <h3>Заведение воды в дом</h3>
+            <p>Профессионально проведем водопровод от скважины до точек потребления в доме.</p>
+            <div class="price">от 15 000₽</div>
+        </div>
+    </div>
+</section>
+
+<section class="advantages">
+  <h2 class="section-title">Наши преимущества</h2>
+
+  <div class="advantage-block">
+    <div class="text-block">
+      <span class="number">1</span>
+      <p><strong class="blue">ГАРАНТИЯ:</strong> Вы получаете настоящую пожизненную гарантию, наше качество, обслуживание в нашей компании.</p>
+    </div>
+    <img src="img/advantage1.PNG" alt="Гарантия" class="image-block">
+  </div>
+
+  <div class="advantage-block reverse">
+    <img src="img/advantage2.PNG" alt="Работы под ключ" class="image-block">
+    <div class="text-block">
+      <span class="number">2</span>
+      <p><strong class="blue">ВЫПОЛНЕНИЕ РАБОТ ПОД КЛЮЧ:</strong> Все работы выполняются под ключ: оказываем полный спектр услуг по бурению и обустройству скважин.</p>
+    </div>
+  </div>
+
+  <div class="advantage-block">
+    <div class="text-block">
+      <span class="number">3</span>
+      <p><strong class="blue">ВЫГОДНО:</strong> Свой авто-парк и своя команда профессиональных рабочих, каждый из которых знает толк в качественных скважинах, которые будут поить ваш дом долгие года.</p>
+    </div>
+    <img src="img/advantage3.PNG" alt="Выгодно" class="image-block">
+  </div>
+</section>
+
+<section class="request-form-section">
+  <div class="form-container">
+    <form action="send.php" method="POST" class="drill-form">
+      <h3>Хотите заказать скважину в нашей компании?</h3>
+      <input type="text" name="region" placeholder="Район бурения" required>
+      <input type="text" name="name" placeholder="Ваше имя" required>
+      <input type="tel" name="phone" placeholder="Номер телефона" required>
+      <button type="submit">Оставить заявку</button>
+    </form>
+    <div class="form-info">
+      <p>Оставьте свои контактные данные в форме, и наш специалист перезвонит вам для уточнения деталей и стоимости.</p>
+    </div>
+  </div>
+  <?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $region = htmlspecialchars($_POST["region"]);
+    $name = htmlspecialchars($_POST["name"]);
+    $phone = htmlspecialchars($_POST["phone"]);
+
+   
+    $to = "your-eliz110400@gmail.com";
+    $subject = "Новая заявка на бурение";
+    $message = "Регион бурения: $region\nИмя: $name\nТелефон: $phone";
+    $headers = "Content-Type: text/plain; charset=utf-8";
+
+    mail($to, $subject, $message, $headers);
+
+    header("Location: thankyou.html");
+    exit;
+}
+?>
+</section>
+
+<section class="examples">
+  <h2>Наши работы</h2>
+  <div class="slider">
+    <button class="prev">&#8592;</button>
+    <div class="slider-track">
+      <img src="img/1.PNG" alt="Пример 1">
+      <img src="img/2.PNG" alt="Пример 2">
+      <img src="img/3.PNG" alt="Пример 3">
+      <img src="img/4.PNG" alt="Пример 4">
+    </div>
+    <button class="next">&#8594;</button>
+  </div>
+  <div class="dots">
+    <span class="dot active"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+  </div>
+  
+</section>
+
+<section id="contacts" class="contacts">
+    <h2>Контакты</h2>
+    <div class="contact-boxes">
+        <div class="contact-box">
+            <h3>Свяжитесь с нами:</h3>
+            <p><strong>По почте:</strong> eliz110406@gmail.com</p>
+            <p><strong>По телефону:</strong></p>
+            <p>Отдел бурения: +7(921) 893-05-10</p>
+            <p>Отдел обустройства: +7(931) 781-46-29</p>
+        </div>
+        <div class="contact-box">
+            <h3>Наш адрес:</h3>
+            <p>Санкт-Петербург, Спасский переулок, 2/44, Санкт-Петербург, 190031</p>
+            <p><strong>Координаты:</strong> 59.929493, 30.317359</p>
+        </div>
+        <div class="map" id="yandex-map"></div>
+    </div>
+</section>
+
+
+
+<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+<script>
+ymaps.ready(function () {
+    var map = new ymaps.Map("yandex-map", {
+        center: [59.929493, 30.317359], 
+        zoom: 14,
+        controls: ['zoomControl', 'fullscreenControl']
+    });
+
+    var placemark = new ymaps.Placemark([59.929493, 30.317359], {
+        balloonContent: 'БУРЭКСПЕРТ — Невский проспект, 100'
+    }, {
+        preset: 'islands#icon',
+        iconColor: '#0b3f52'
+    });
+
+    map.geoObjects.add(placemark);
+});
+</script>
+<script>
+  function toggleMenu(el) {
+    const menu = document.getElementById('sideMenu');
+    const overlay = document.getElementById('overlay');
+    el.classList.toggle('open');
+    menu.classList.toggle('open');
+    overlay.classList.toggle('show');
+  }
+
+  function closeMenu() {
+    document.getElementById('sideMenu').classList.remove('open');
+    document.getElementById('overlay').classList.remove('show');
+    document.querySelector('.burger').classList.remove('open');
+  }
+</script>
+
+<script>
+const track = document.querySelector('.slider-track');
+  const dots = document.querySelectorAll('.dot');
+  let currentIndex = 0;
+
+  function updateSlider() {
+    const width = document.querySelector('.slider').clientWidth;
+    track.style.transform = `translateX(-${currentIndex * width}px)`;
+    dots.forEach(dot => dot.classList.remove('active'));
+    dots[currentIndex].classList.add('active');
+  }
+
+  document.querySelector('.next').addEventListener('click', () => {
+    currentIndex = (currentIndex + 1) % 4;
+    updateSlider();
+  });
+
+  document.querySelector('.prev').addEventListener('click', () => {
+    currentIndex = (currentIndex - 1 + 4) % 4;
+    updateSlider();
+  });
+
+  window.addEventListener('resize', updateSlider);
+  </script>
+
+<footer class="footer">
+  <div class="footer-left">
+    <img src="img/logo.PNG" alt="Логотип" class="footer-logo">
+    <p>20 лет бурим<br>скважины на воду<br>СПБ и Лен. области</p>
+  </div>
+  <div class="footer-center">
+    <button class="callback-btn">Перезвоните мне</button>
+    <div class="phone">
+      <span class="phone-icon">&#9742;</span>
+      <a href="tel:+79218930510">+7(921) 893-05-10</a>
+    </div>
+  </div>
+  <div class="footer-right">
+    <p class="price-note">Стоимость услуг и товаров<br>необходимо уточнять у менеджера.</p>
+    <a href="#" class="policy">Политика конфиденциальности</a>
+  </div>
+</footer>
+<button id="toTopBtn" title="Наверх">↑ Наверх </button>
+<script>
+const toTopBtn = document.getElementById("toTopBtn");
+
+window.onscroll = function () {
+  if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+    toTopBtn.style.display = "block";
+  } else {
+    toTopBtn.style.display = "none";
+  }
+};
+
+toTopBtn.addEventListener("click", function () {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+</script>
+</body>
+</html>
